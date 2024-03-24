@@ -1,0 +1,24 @@
+import './App.css'
+import { TwitterFollowCard } from './TwitterFollowCard.jsx'
+// esta clase es para crear componentes y no cargar el main de muchas cosas
+//hay que exportarlo para que lo puedan usar otras clases
+export function App (){
+    const alvaro = {userName: "alvaromartin", name: "Alvaro Martin Gomez"}
+    return(
+    //en vez de poner React.Fragment , como no se va a renderizar , se pone asi , no se que significa que se renderice o que no
+    <section>
+        {/*llamo al objeto de arriba */}
+        <TwitterFollowCard {...alvaro}/>
+        <TwitterFollowCard isFollowing={true} username="midudev" name ="Miguel Ángel Durán"/>
+        <TwitterFollowCard isFollowing={true} username="Pepe" name ="Pepe Rodriguez"/>
+        <TwitterFollowCard  name="Alfonso Garcia Herrero">
+                {/*a esto se le llama children , porque lo estan envolviendo  , entonces en la funcion seria quitar 'username' 
+                y poner children , y hacer los respectivos cambios en el codigo  , en este caso , en el strong.
+                Puede envolver lo que sea , como si pones un h1.
+                ahroa no funcionaria porque children lo he quitado de la funcion */}
+                Alfonso García Sastre
+        </TwitterFollowCard>
+    </section>
+    )
+    
+}

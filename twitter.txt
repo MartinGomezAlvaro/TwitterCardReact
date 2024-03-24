@@ -1,0 +1,58 @@
+//ESTA CLASE SE CREA PARA QUE EL COMPONENTE QUE SE CREA SEA REUTILIZABLE
+//ANTES ESTABA EN LA CLASE APP.JSX , PARA QUE SEA REUTILIZABLE UN COMPONENTE , SE LE DEBEN PODER PASAR PARAMETROS
+//DA IGUAL DONDE SE CREE EL COMPONENTE , PERO EL TIO HA DEDICIDO CREAR ESTA CLASE PARA HACERLO REUTILIZABLE EN VEZ DE CAMBIAR EL COMPONENTE PARA
+//QUE SEA REUTILIAZBLE EN LA CLASE DE APP.JSX
+
+//se importa esto para que el 'siguiendo' o 'no siguiendo' sea un estado
+//es decir , que la funcion tenga memoria para saber cual esta pulsado
+import {useState} from 'react'
+
+//username unknown es el valor por defecto que va a tener la variable , adopta ese valor si no se la llama en app.jsx
+//se quita de aqui la variable isFolloing porque ya la estoy declarando abajo , se pone initialIsFollowing para pasar el valor inicial del boton , si esta siguiendo o no
+export function TwitterFollowCard({username ='unknown' , name, initialIsFollowing}){
+    //para meter dentro de una cadena de texto una variable , se pone con el dolar y las llaves
+    //ademas , se cambian las dobles comillas por los acentos
+    const imagen = `https://unavatar.io/${username}`
+
+    //esto es un huk , sirve para guardar el estado de una variablete devuelve un array de dos posiciones 
+    //en la primera , el valor del boton , si es siguiendo o no
+    //en la segunda una funcion , que actualiza el valor del boton
+    //en vez de poner false , se pone el initialIsFollowing para que se guarde el estado inicial del boton
+    const[isFollowing,setIsFollowing] = useState(initialIsFollowing)
+
+    //if ternario
+    const text = isFollowing ? 'Siguiendo': 'Seguir'
+    //para cambiar de estilo al boton en funcion de si esta en siguiendo o no
+    //como continene los estilos css en función de si está siguiendo o no , es como si fuera la clase del boton
+    const buttonClassName = isFollowing
+    ? 'tw-followCard-button is-following'
+    : 'tw-followCard-button'
+
+    //esta funcion sirve para cambiar el valor de isFollowing , que se guarda en setIsFollowing
+    //esta funcion se activa al dar al boton
+    const handleClick = () => {
+        setIsFollowing(!isFollowing)
+    }
+
+    return(
+        //el style se pone asi , tipo objeto
+    //<article style={{display : 'flex', alignItems: 'center', color: 'fff'}}>
+    //classname es como class en html , para añadir una clase a un elemento , se pone asi porque class es una palabra reservada
+    <article className='tw-followCard'>
+        <header className='tw-followCard-header'>
+            <img className='tw-followCard-avatar' 
+            alt="El avatar de midudev" src={imagen}></img>
+            <div className='tw-followCard-info'>
+                <strong>{name}</strong>
+                <span className='tw-followCard-infoUserName'>@{username}</span>
+            </div>
+        </header>
+        <aside>
+            {/**el onClick es similar al addEventListener de js , pero al ser declarativo , no se pone el addEventListener */}
+            <button className={buttonClassName} onClick={handleClick}>
+                {text}
+            </button>
+        </aside>
+    </article>
+    )
+}
